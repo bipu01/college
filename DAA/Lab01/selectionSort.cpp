@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 
@@ -26,7 +25,7 @@ void selectionSort(int array[], int length)
 int main()
 {
       int array[] = {64, 25, 13, 88, 41, 70};
-      int n = sizeof(array) / sizeof(array[]);
+      int n = sizeof(array) / sizeof(array[0]);
 
       cout << "Original Array: ";
       for (int i = 0; i < n; i++)
