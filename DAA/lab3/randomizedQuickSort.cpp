@@ -12,18 +12,24 @@ void swap(int &a, int &b)
       b = temp;
 }
 
-// Partition function that returns the pivot position
-int partition(int arr[], int low, int high)
+// Simple pseudo-random partition function without external random libraries
+int pseudoRandomPartition(int arr[], int low, int high)
 {
-      int pivot = arr[high]; // Taking the last element as pivot
-      int i = (low - 1);     // Index of smaller element
+      // Use a simple calculation based on indices for pseudo-randomness
+      int pseudoRandom = low + ((high + low) * (low + 1)) % (high - low + 1);
+
+      // Swap pseudo-random element with the last element
+      swap(arr[pseudoRandom], arr[high]);
+
+      // Standard partition
+      int pivot = arr[high];
+      int i = (low - 1);
 
       for (int j = low; j <= high - 1; j++)
       {
-            // If current element is smaller than or equal to pivot
             if (arr[j] <= pivot)
             {
-                  i++; // Increment index of smaller element
+                  i++;
                   swap(arr[i], arr[j]);
             }
       }
@@ -31,19 +37,19 @@ int partition(int arr[], int low, int high)
       return (i + 1);
 }
 
-// QuickSort function
-void quickSort(int arr[], int low, int high)
+// Randomized QuickSort function
+void randomizedQuickSort(int arr[], int low, int high)
 {
       iterationCount++; // Increment counter for each recursive call
 
       if (low < high)
       {
-            // pi is partitioning index
-            int pi = partition(arr, low, high);
+            // Get partition index
+            int pi = pseudoRandomPartition(arr, low, high);
 
-            // Separately sort elements before and after partition
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
+            // Recursively sort elements before and after partition
+            randomizedQuickSort(arr, low, pi - 1);
+            randomizedQuickSort(arr, pi + 1, high);
       }
 }
 
@@ -73,7 +79,7 @@ int main()
 
       // Reset iteration count before sorting
       iterationCount = 0;
-      quickSort(arr, 0, n - 1);
+      randomizedQuickSort(arr, 0, n - 1);
 
       cout << "Sorted array: ";
       printArray(arr, n);
